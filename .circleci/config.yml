@@ -7,42 +7,17 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run:
-        name:  "my-build-commands"
-        command: |
-          echo "-----build-----"
+      - run: echo "this is the build job"
   test:
-  docker:
+    docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run:
-        name:  "my-test-commands"
-        command: |
-          echo "-----test-----"
-  deploy:
-  docker:
-      - image: cimg/base:2021.04
-    steps:
-      - checkout
-      - run:
-        name:  "my-deploy-commands"
-        command: |
-          echo "-----deploy-----"
+      - run: echo "this is the test job"
 
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - hold:
-          type: approval
-          requires:
-            - build
-            - test
-      - deploy:
-          requires:
-            - hold
+      - test
