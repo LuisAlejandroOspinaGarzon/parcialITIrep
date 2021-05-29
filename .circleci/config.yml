@@ -7,8 +7,8 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run:
-        echo "this is the build job"
+      - run: echo "this is the build job"
+      - run: whoami
   test:
     docker:
       - image: cimg/base:2021.04
