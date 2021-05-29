@@ -35,7 +35,7 @@ workflows:
       - desplegue
       - test:
           requires:
-            - despliegue
+            - desplegue
       - hold:
           type: approval
           requires:
