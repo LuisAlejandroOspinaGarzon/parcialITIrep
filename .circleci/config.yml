@@ -2,45 +2,45 @@ version: 2.1
 
 # Define the jobs we want to run for this project
 jobs:
-  desplegue:
+  inicio:
     docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
       - run: echo "this is the build job"
       - run: whoami
-  test:
+  verificacion:
     docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: echo "this is the test job"
-  hold:
+      - run: echo "this is the verificacion job"
+  aprovacion_manual:
     docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: echo "this is the hold job"
-  deploy:
+      - run: echo "this is the aprovacion_manual job"
+  desplegue:
     docker:
       - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: echo "this is the deploy job"
+      - run: echo "this is the desplegue job"
 
 # Orchestrate our job run sequence
 workflows:
   web_server:
     jobs:
-      - desplegue
-      - test:
+      - inicio
+      - verificacion:
           requires:
-            - desplegue
-      - hold:
+            - inicio
+      - aprovacion_manual:
           type: approval
           requires:
-            - desplegue
+            - inicio
             - test
-      - deploy:
+      - desplegue:
           requires:
-            - hold
+            - aprovacion_manual
