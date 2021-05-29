@@ -40,7 +40,7 @@ workflows:
           type: approval
           requires:
             - inicio
-            - test
+            - verificacion
       - desplegue:
           requires:
             - aprovacion_manual
