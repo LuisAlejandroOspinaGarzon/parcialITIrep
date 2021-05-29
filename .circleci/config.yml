@@ -14,10 +14,32 @@ jobs:
     steps:
       - checkout
       - run: echo "this is the test job"
+  hold:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: echo "this is the hold job"
+  deploy:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: echo "this is the deploy job"
 
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+            - test
+      - deploy:
+          requires:
+            - hold
