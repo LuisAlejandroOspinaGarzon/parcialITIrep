@@ -3,29 +3,15 @@ version: 2.1
 # Define the jobs we want to run for this project
 jobs:
   build:
-    docker:
-      - image: circleci/<language>:<version TAG>
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run: my-build-commands
   test:
     docker:
-      - image: circleci/<language>:<version TAG>
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run: my-test-commands
   deploy:
-    docker:
-      - image: circleci/<language>:<version TAG>
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run: my-deploy-commands
