@@ -8,7 +8,6 @@ jobs:
     steps:
       - checkout
       - run:
-        name: "desplegue"
         echo "this is the build job"
         command: |
           whoami
