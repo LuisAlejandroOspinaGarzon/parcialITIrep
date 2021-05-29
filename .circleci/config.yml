@@ -9,8 +9,7 @@ jobs:
       - checkout
       - run:
         echo "this is the build job"
-        command: |
-          whoami
+        whoami
   test:
     docker:
       - image: cimg/base:2021.04
