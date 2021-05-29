@@ -12,13 +12,23 @@ jobs:
         command: |
           echo "-----build-----"
   test:
+  docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: my-test-commands
+      - run:
+        name:  "my-test-commands"
+        command: |
+          echo "-----test-----"
   deploy:
+  docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: my-deploy-commands
+      - run:
+        name:  "my-deploy-commands"
+        command: |
+          echo "-----deploy-----"
 
 # Orchestrate our job run sequence
 workflows:
