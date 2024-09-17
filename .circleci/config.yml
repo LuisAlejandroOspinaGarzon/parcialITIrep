@@ -1,0 +1,52 @@
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  inicio:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: whoami
+      - run: echo "realizando actualización del codigo de la página"
+      - run: sudo service httpd stop
+      - run: cd /var/www/html/
+      - run: git clone https://github.com/LuisAlejandroOspinaGarzon/parcialITIrep.git
+  verificacion:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: echo "realizando validación del html"
+      - run: apachect1 configtest
+
+  aprovacion_manual:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: echo "esperando realización manual"
+  desplegue:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run: echo "cometiendo cambios"
+      - run: sudo service httpd start
+
+# Orchestrate our job run sequence
+workflows:
+  web_server:
+    jobs:
+      - inicio
+      - verificacion:
+          requires:
+            - inicio
+      - aprovacion_manual:
+          type: approval
+          requires:
+            - inicio
+            - verificacion
+      - desplegue:
+          requires:
+            - aprovacion_manual
